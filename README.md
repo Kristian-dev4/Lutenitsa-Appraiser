@@ -74,7 +74,7 @@ A web app for rating and discussing lutenitsa brands. Authenticated users can re
 - `ErrorService` — centralizes error reporting
 
 ## ✅ Notes
-- Ensure `environment.apiUrl` and `environment.apiKey` are set correctly for Supabase access.
+- Ensure SUPABASE_URL and SUPABASE_ANON_KEY are set correctly for Supabase access.
 - The app relies on Supabase auth session state, so expired or missing sessions will prevent authenticated calls.
 - If `getUserId()` returns `null`, verify that the user is logged in and that Supabase has an active session.
 
