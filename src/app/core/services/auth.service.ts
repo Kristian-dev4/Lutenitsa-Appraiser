@@ -16,6 +16,7 @@ export class AuthService {
     public isAuthenticated = this._isAuthenticated.asReadonly();
     public currentUser = this._currentUser.asReadonly();
 
+
     constructor(private supaBase: SupabaseService) {
         const savedUser = localStorage.getItem('currentUser');
         if (savedUser) {
@@ -95,7 +96,7 @@ export class AuthService {
     }
 
     async getUserId(): Promise<string | null> {
-        const { data: { user } } = await this.supaBase.getClient().auth.getUser();
-        return user ? user.id : null;
+        const user = this._currentUser()?.id;
+        return user ? user : null;
     }
 }

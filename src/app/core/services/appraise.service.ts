@@ -48,9 +48,10 @@ export class AppraiseService {
                 .from('appraises')
                 .select('*')
                 .eq('id', id)
-                .single()
+                .maybeSingle()
                 .then(res => {
                     if (res.error) throw res.error;
+                    if (!res.data) throw new Error('Appraise not found');
                     return res.data as Appraise;
                 })
         );
@@ -85,10 +86,10 @@ export class AppraiseService {
                 .from('appraises')
                 .select('*')
                 .eq('id', id)
-                .single()
+                .maybeSingle()
                 .then(res => {
                     if (res.error) throw res.error;
-                    return res.data as Appraise
+                    return res.data as Appraise;
                 })
         );
 
