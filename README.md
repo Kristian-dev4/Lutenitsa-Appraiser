@@ -1,71 +1,85 @@
 # 🌶️ Lutenitsa Appraiser 🍅
 
-A web app for rating and discussing lutenitsa brands. Authenticated users can add appraisals and comments.
-
+A web app for rating and discussing lutenitsa brands. Authenticated users can register, log in, submit appraisals, and comment on reviews.
 
 ## ✨ Features
-- 🔐 Secure user authentication
-- ✍️ Add appraisals (brand/rating/evaluation)
-- 💬 Comment on existing appraisals
-- 📱 Mobile-friendly (Angular Material)
-- 🍥 Responsive design
+- 🔐 User authentication with Supabase
+- ✍️ Create appraisals with brand, rating, and notes
+- 💬 Add comments to existing appraisals
+- 📱 Responsive UI built with Angular Material
+- ⚡ State management with Angular signals and RxJS
+- 🧠 Error handling through a centralized service
 
-## 🈺 Application Workflow
+## 🚀 Quick Start
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Configure Supabase credentials in `src/environments/environment.ts`.
+3. Run the app:
+   ```bash
+   ng serve
+   ```
+4. Open the browser at `http://localhost:4200`.
 
-### 🔐 User Authentication
-- **Action**: User signs up or logs in  
-- **Backend**: Supabase auth handles registration/login and session management
+## 🧩 App Architecture
+- `src/app/components/` — UI components and page views
+- `src/app/core/services/` — services for auth, data, error handling, and Supabase client
+- `src/app/models/` — typings for appraise, comment, extended appraise, and user objects
+- `src/app/utils/` — reusable form helpers
+- `src/environments/` — environment-specific configuration
 
-### 📊 Catalog View
-- **Action**: User views Lutenitsa appraisals  
-- **Backend**: Fetches all appraisals from database
+## 🔐 Authentication Flow
+- Users sign up or log in using Supabase Auth.
+- Successful login stores the current user in local state and localStorage.
+- Authenticated actions such as creating appraisals and comments use the active Supabase session.
 
-### 📝 Adding an Appraisal
-- **Action**: Authenticated user submits new appraisal  
-- **Backend**: Creates new record in appraisals table
+## 🗄️ Database Schema
+### `appraises`
+- `id`
+- `brand_name`
+- `rating`
+- `appraise`
+- `user_id`
+- `created_at`
 
-### ✍️ Adding a Comment
-- **Action**: Authenticated user comments on appraisal  
-- **Backend**: Stores comment linked to appraisal and user
+### `comments`
+- `id`
+- `appraise_id`
+- `user_id`
+- `comment_text`
+- `created_at`
 
+### `profiles`
+- `id`
+- `email`
 
 ## 🛠️ Tech Stack
 ### Frontend
 - Angular 20
 - TypeScript
 - Angular Material
-- Angular Animations
 - RxJS
-- NgRx
 
 ### Backend
 - Supabase (PostgreSQL)
-- Row-Level Security (enabled)
+- Row-Level Security
 - JWT Authentication
 - Realtime API
 
-## 🛠️ Project Details
+## ⚙️ Key Services
+- `AuthService` — handles login, registration, logout, and user session state
+- `AppraiseService` — loads appraisals, comments, and performs CRUD operations
+- `SupabaseService` — initializes and provides the Supabase client
+- `ErrorService` — centralizes error reporting
 
-### 🖥️ Frontend Components
-- **📜 Catalog** (Catalog display)
-- **🔍 Details** (Single view)
-- **✏️ AppraisalFormComponent** (Submission form)
-- **💬 Comments** (Comment interface)
+## ✅ Notes
+- Ensure `environment.apiUrl` and `environment.apiKey` are set correctly for Supabase access.
+- The app relies on Supabase auth session state, so expired or missing sessions will prevent authenticated calls.
+- If `getUserId()` returns `null`, verify that the user is logged in and that Supabase has an active session.
 
-### ⚙️ Services
-- **👤 AuthService** (User authentication)
-- **🗃️ DataService** (Database operations)
-
-### 🗄️ Database Tables
-**📦 appraisals**
-- id, brand_name, rating, appraise, user_id, created_at
-
-**💭 comments**  
-- id, appraisal_id, user_id, comment_text, created_at
-
-**👥 profiles**  
-- id, email
-
-## 🔄 Implemented Angular Lifecycle Hooks
-
-This web application implements the necessary Angular lifecycle hooks to properly manage initialization, data loading, and cleanup operations. The hooks follow Angular's best practices for component lifecycle management.
+## 📚 Recommended Improvements
+- Add pagination or search filters for appraisals
+- Support user profile editing
+- Add real-time updates for comments
+- Improve form validation and user feedback
