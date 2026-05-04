@@ -7,11 +7,6 @@ import { notAuthGuard } from './core/guards/not-auth.guard';
 
 export const routes: Routes = [
     {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
-    },
-    {
         path: 'home',
         component: Home,
         data: { animation: 'homePage' }
@@ -61,5 +56,10 @@ export const routes: Routes = [
         path: 'logout',
         loadComponent: () => import('../app/components/logout/logout').then(c => c.Logout),
         canActivate: [authGuard]
-    }
+    },
+    {
+        path: '**',
+        redirectTo: 'home',
+        pathMatch: 'full'
+    },
 ];
